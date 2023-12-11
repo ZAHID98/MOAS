@@ -1,0 +1,109 @@
+﻿@model LogOnModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MOAS | Log On</title>
+    <link rel="shortcut icon" type="image/png" href="@Url.Content("~/favicon.png")" />
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dist/css/coretemplate.min.css">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!--Message-->
+        @if (ViewBag.Info != null)
+        {
+
+            <div class="alert alert-success" role="alert">
+                <a class="close" data-dismiss="alert" href="#"><i class="fas fa-times text-white"></i></a>
+                <strong>@ViewBag.Info</strong>
+                
+            </div>
+
+        }
+        else if (ViewBag.Error != null)
+        {
+
+            <div class="alert alert-danger" role="alert">
+                <a class="close" data-dismiss="alert" href="#"><i class="fas fa-times text-white"></i></a>
+                <strong>@ViewBag.Error</strong>
+                
+            </div>
+
+        }
+        <!-- /.login-logo -->
+        <div class="card bg-gradient-dark text-white">
+            <div class="card-header text-center">
+                <img src="~/images/logo.png" class="img-fluid" alt="App Name" />
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+
+                <form asp-action="LogOn" asp-controller="Account" method="post">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                    <div class="input-group mb-3">
+                        <input asp-for="UserName" class="form-control" placeholder="User Name">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <div class="input-group mb-3">
+                        <input asp-for="Password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-info">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn bg-gradient-success btn-block">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core Template App -->
+    <script src="~/dist/js/coretemplate.js"></script>
+
+</body>
+</html>
+

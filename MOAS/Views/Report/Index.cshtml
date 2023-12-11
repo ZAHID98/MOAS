@@ -1,0 +1,238 @@
+﻿@model MOAS.Models.ReportParameter
+@{
+    ViewData["Title"] = "Report List";
+}
+
+
+<link rel="stylesheet " href="~/css/gridmvc.css" />
+<link href="~/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<section class="content-header">
+<div class="row" >
+ <form method="post" asp-action="ReportPreviw" id="frm">
+  <div class="col-12 col-lg-12">
+  <div class="info-box bg-gradient-lightblue">
+                
+    <div class="info-box-content">
+
+      <div class="form-row">
+                <div class="col-sm">
+                 @Html.HiddenFor(m => m.ReportID)
+
+                    <div class="form-group">
+                        <label asp-for="Start" class="form-label">From Date</label>
+                        <input asp-for="Start" type="date" value="@DateTime.Now" class="form-control form-control-sm" />
+                        <span asp-validation-for="Start" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-sm">
+                <div class="form-group">
+                    <label asp-for="End" class="form-label">To Date</label>
+                    <input asp-for="End" type="date" value="@DateTime.Now" class="form-control form-control-sm" />
+                    <span asp-validation-for="End" class="text-danger"></span>
+                </div>
+            </div>
+
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label asp-for="CID" class="form-label">Customer</label>
+                                    <select asp-for="CID" asp-items=" ViewBag.cust">
+                                        <option value="">Please Select Customer</option>
+                                    </select>
+                                    <span asp-validation-for="End" class="text-danger"></span>
+                                </div>
+                            </div>
+
+         @*  <div class="col-4-sm">
+             <div class="form-group">
+               <label asp-for="CID" class="form-label"></label>
+
+               <select asp-for="CID" asp-items=" ViewBag.cust">
+                <option value="">Please Select Customer</option>
+              </select>
+               @*  @Html.DropDownList("CID", ViewBag.cust as SelectList, "Please Select Customer", new { @class= "form-control form-control-sm" })*@
+               @*   <span asp-validation-for="CID" class="text-danger"></span>
+                    </div>
+                 </div>*@
+
+          <div class="col-3-sm">
+           <div class="form-group">
+              <label asp-for="EquipmentID" class="form-label">Equipment SL</label>
+              @Html.DropDownListFor(m=>m.EquipmentID, new List<SelectListItem>(), String.Empty, new { @class = "form-control input-sm" })
+              <span asp-validation-for="EquipmentID" class="text-danger"></span>
+             </div>
+          </div>
+
+          </div>
+                    
+                </div>
+
+
+            </div>
+
+
+ </div>
+        <div class="col-12 col-md-12">
+            <div class="info-box bg-gradient-gray">
+
+                <div class="info-box-content">
+                    <div class="primary">
+                        <h5 style="color:aquamarine">Used Oil Reports</h5>
+                    </div>
+
+                    <div class="panel-body">
+                        <ul>
+                            <li style="color:white;font-size:larger">
+                                <a href="#" style="color:azure" onclick="PreviewReport(1)">
+                                   Analysis Report
+                                </a>
+                            </li>
+                            @*<li>
+                            <a href="#" onclick="PreviewReport(2)">
+                            Team Performance
+                            </a>
+                            </li>
+                            <li>
+                            <a href="#" onclick="PreviewReport(3)">
+                            Revenue Vs. Expense By Product
+                            </a>
+                            </li>
+                            <li>
+                            <a href="#" onclick="PreviewReport(11)">
+                            Job Attend By Product Property
+                            </a>
+                            </li>
+                            <li>
+                            <a href="#" onclick="PreviewReport(4)">
+                            Reveneue Vs. Expense By Revenue Wing
+                            </a>
+                            </li>*@
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+       @* <div class="col-12 col-md-6">
+            <div class="info-box bg-gradient-info">
+
+                <div class="info-box-content">
+                    <div class="primary">
+                        <h5 style="color:aquamarine">Other Reports</h5>
+                    </div>
+
+                    <div class="panel-body">
+                        <ul>
+                            <li style="color:white;font-size:larger">
+                                <a href="#" style="color:azure" onclick="PreviewReport(1)">
+                                    Daily Sales
+                                </a>
+                            </li>
+                            @*<li>
+                            <a href="#" onclick="PreviewReport(2)">
+                            Team Performance
+                            </a>
+                            </li>
+                            <li>
+                            <a href="#" onclick="PreviewReport(3)">
+                            Revenue Vs. Expense By Product
+                            </a>
+                            </li>
+                            <li>
+                            <a href="#" onclick="PreviewReport(11)">
+                            Job Attend By Product Property
+                            </a>
+                            </li>
+                            <li>
+                            <a href="#" onclick="PreviewReport(4)">
+                            Reveneue Vs. Expense By Revenue Wing
+                            </a>
+                            </li>*@
+                 @*       </ul>
+                    </div>
+                </div>*@
+
+
+          @*  </div>*@
+        @*</div>*@
+        </form>
+    </div>
+
+
+  
+
+
+    
+</section>
+<div id="divPermission"></div>
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+<script src="~/plugins/select2/js/select2.min.js"></script>
+
+<script type="text/javascript">
+    $("#CID").select2();
+        $("#CID").change(
+            function () {
+                var fuid = $("#CID").val();
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Report/getEQP',
+                        data: { 'CID': fuid },
+                        datatype: 'json',
+                        success: function (result) {
+
+                            console.log(result);
+                           
+                            var C = $("#EquipmentID");
+                            C.empty();
+                            C.append('<option value=""></option>');
+                            $.each(result, function (i, item) {
+                                C.append('<option value="' + item.value + '">' +
+                                    item.text + '</option>');
+
+                                
+                            }
+                            );
+                        }
+                    }
+                );
+            }
+        );
+
+
+        function PreviewReport(RID) {
+            $("#ReportID").val(RID);
+            var flag = true;
+            switch (true) {
+                case (RID == 3):
+                    {
+                        if ($("#DistributorID").val() == "") {
+                            flag = false;
+                            alert("No Distributor Selected");
+                        }
+                        break;
+                    }
+                
+                 
+            }
+            if (flag) {
+                $("#frm").prop("target", "_blank");
+                $("#frm").submit();
+            }
+        }
+
+
+
+</script>
+
+
+    }
+   
+

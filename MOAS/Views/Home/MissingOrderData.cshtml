@@ -1,0 +1,274 @@
+﻿@model IEnumerable<VMOrderData>
+@{
+    ViewData["Title"] = "Missing Order Data";
+
+    long i = 0;
+}
+
+<style>
+    #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 2px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #f01523;
+        }
+
+        #customers th {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-align: left;
+            background-color: #4267B2;
+            color: white;
+        }
+
+    table {
+        width: 50%;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th {
+        height: 10px;
+    }
+
+    #customers td {
+        font-size: 11px;
+        vertical-align: middle;
+        height: 10px;
+        padding: 2.5px;
+        text-align: center;
+    }
+
+    #customers th {
+        font-size: 10px;
+        padding: 5px;
+        text-align: center;
+    }
+</style>
+
+<link rel="stylesheet " href="~/css/gridmvc.css" />
+
+<section class="content-header">
+     <div class="container-fluid"> 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+
+                    <div class="card-body">
+                        <form action="/Home/getSalesTTY" class="form-inline" method="post">
+                          
+                            <div class="row">
+                                <div class="col-4">
+                                     <div class="row"> 
+                                        <div class="col-2">
+                                            <label>From Date:</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <input type="date" id="fromdate" name="Start" value="@ViewBag.StartDate" class="form-control">
+                                        </div>
+                                     </div> 
+                                </div>
+                                <div class="col-4">
+                                     <div class="row"> 
+                                        <div class="col-2">
+                                            <label>To Date:</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="date" class="form-control" value="@ViewBag.EndDate" name="End" id="toDate">
+                                        </div>
+                                     </div> 
+                                </div>
+                                <div class="col-4">
+                                   
+
+                                    <div class="col-">
+                                        <button type="submit" class="btn btn-sm bg-gradient-success" id="btnSearch">
+                                            <i class="fas fa-search"></i> Search
+                                        </button>
+
+                                        @if (ViewBag.SearchText != null)
+                                        {
+                                            <span class="text-lg-end">
+
+                                                <a title="Clear Search" asp-action="Index">
+                                                    <i style="color:red;" class="fa fa-fw fa-times"></i> Total Result Found @Model.Count()
+                                                </a>
+                                            </span>
+
+                                        }
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+        </div>
+     </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">List of Invoice</h3>
+                        
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0 mt-3" >
+                       
+
+                        <hr />
+                        @if (Model != null)
+                        {
+                            <table id="customers" class="table table-bordered table-striped datatable">
+                                <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Client</th>
+                                        <th>APP_REF_NO</th>
+                                        <th>MATERIAL</th>
+                                        <th>Sales Org</th>
+                                        <th>Dis.Channel</th>
+                                        <th>Division</th>
+                                        <th>SO TYPE</th>
+                                        <th>Customer</th>
+                                        <th>Qty</th>
+                                        <th>SU</th>
+                                        <th>Plant</th>
+                                        <th>Route</th>
+                                        <th>Del.Date</th>
+                                        <th>WorkArea</th>
+                                        <th>Created On</th>
+                                        <th>SO Num</th>
+                                        <th>DEL IND</th>
+                                       
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        i = i + 1;
+                                        <tr>
+
+                                           <td>@i</td>
+                                            <td>@item.MANDT</td>
+                                            <td>@item.APP_REF_NO</td>
+                                            <td>@item.MATERIAL</td>
+                                            <td>@item.SalesOrg</td>
+                                            <td>@item.DISTR_CHAN</td>
+                                            <td>@item.DIVISION</td>
+                                            <td>@item.SO_TYPE</td>
+                                            <td>@item.CUSTOMER</td>
+                                            <td>@item.QUANTITY</td>
+                                            <td>@item.SU</td>
+                                            <td>@item.PLANT</td>
+                                            <td>@item.ROUTE</td>
+                                            <td>
+                                            @item.DELVY_DATE.ToString("dd.MM.yyyy")
+                                            </td>
+                                            <td>@item.ZZTER</td>
+                                            <td>
+                                                @item.CREATED_ON.ToString("dd.MM.yyyy")
+                                            </td>
+                                            <td>
+                                                @item.SO_NUM
+                                            </td>
+                                            <td>
+                                                @item.DEL_IND
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+@section Scripts
+    {
+
+
+    <script type="text/javascript">
+
+       $(document).ready(function(){
+            $('.datatable').DataTable({
+
+                drawCallback: function () {
+                    var api = this.api();
+                    $(api.table().footer()).html(
+                        api.column(6, { page: 'current' }).data().sum()
+                    );
+                },
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    {
+                        extend: 'pageLength',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+
+                    'colvis'
+                ],
+                columnDefs: [{
+                    visible: false
+                }],
+                responsive: true,
+
+            });
+       })
+
+    </script>
+
+}
+

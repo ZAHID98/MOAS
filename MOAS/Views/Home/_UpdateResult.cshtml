@@ -1,0 +1,58 @@
+﻿@model IList<Permission>
+@{
+    var user = ViewBag.User as MOAS.Models.User;
+}
+<!-- /.modal -->
+<div class="modal fade" id="mdPermission">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-success">
+                <h4 class="modal-title">Role set for @user!.DisplayText</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmPermission">
+                <input type="hidden" name="UserID" value="@user.UserID" />
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Role ID</th>
+                                <th scope="col">Role Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Module</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var perm in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="chk" value="@perm.RoleID" @(perm.Status==true?"checked":"")>
+                                    </td>
+                                    <td>
+                                        @perm.Roles.Name
+                                    </td>
+                                    <td>
+                                        @perm.Roles.Description
+                                    </td>
+                                    <td>
+                                        @perm.Roles.ModuleName
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="SubmitPermission()" class="btn bg-gradient-success"><i class="fas fa-save"></i> Save changes</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

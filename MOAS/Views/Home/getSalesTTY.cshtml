@@ -1,0 +1,272 @@
+﻿@model IEnumerable<DailySalesTTY>
+@{
+    ViewData["Title"] = "Daily SalesTTY";
+   
+}
+
+<style>
+    #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 2px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #f01523;
+        }
+
+        #customers th {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-align: left;
+            background-color: #4267B2;
+            color: white;
+        }
+
+    table {
+        width: 50%;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th {
+        height: 10px;
+    }
+
+    #customers td {
+        font-size: 11px;
+        vertical-align: middle;
+        height: 10px;
+        padding: 2.5px;
+        text-align: center;
+    }
+
+    #customers th {
+        font-size: 10px;
+        padding: 5px;
+        text-align: center;
+    }
+</style>
+
+<link rel="stylesheet " href="~/css/gridmvc.css" />
+
+<section class="content-header">
+     <div class="container-fluid"> 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+
+                    <div class="card-body">
+                        <form action="/Home/getSalesTTY" class="form-inline" method="post">
+                          
+                            <div class="row">
+                                <div class="col-4">
+                                     <div class="row"> 
+                                        <div class="col-2">
+                                            <label>From Date:</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <input type="date" id="fromdate" name="Start" value="@ViewBag.StartDate" class="form-control">
+                                        </div>
+                                     </div> 
+                                </div>
+                                <div class="col-4">
+                                     <div class="row"> 
+                                        <div class="col-2">
+                                            <label>To Date:</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="date" class="form-control" value="@ViewBag.EndDate" name="End" id="toDate">
+                                        </div>
+                                     </div> 
+                                </div>
+                                <div class="col-4">
+                                   
+
+                                    <div class="col-">
+                                        <button type="submit" class="btn btn-sm bg-gradient-success" id="btnSearch">
+                                            <i class="fas fa-search"></i> Search
+                                        </button>
+
+                                        @if (ViewBag.SearchText != null)
+                                        {
+                                            <span class="text-lg-end">
+
+                                                <a title="Clear Search" asp-action="Index">
+                                                    <i style="color:red;" class="fa fa-fw fa-times"></i> Total Result Found @Model.Count()
+                                                </a>
+                                            </span>
+
+                                        }
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+        </div>
+     </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">List of Invoice</h3>
+                        
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0 mt-3" >
+                       
+
+                        <hr />
+                        @if (Model != null)
+                        {
+                            <table id="customers" class="table table-bordered table-striped datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Invoice Date</th>
+                                        <th>WorkArea</th>
+                                        <th>PCd Name</th>
+                                        <th>ProductID</th>
+                                        <th>TP</th>
+                                        <th>Vat </th>
+                                        <th>Sales_Qty</th>
+                                        <th>Sales_Val</th>
+                                        <th>Retn_Qty</th>
+                                        <th>ActualSales_Qty</th>
+                                        <th>DeptCd</th>
+                                        <th>Period</th>
+                                        <th>MsrCd</th>
+                                        <th>Supervisor</th>
+                                        <th>SSupervisor</th>
+                                        <th>SSSupervisor</th>
+                                        <th>SSSSupervisor</th>
+                                        <th>RegionCode</th>
+                                        <th>ZoneCode</th>
+                                        <th>SMAreaCode</th>
+                                        <th>GMAreaCode</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                           <td>@item.Company</td>
+                                            <td>
+                                                @item.invdt.ToString("dd.MM.yyyy")
+                                            </td>
+                                            <td>@item.WorkArea</td>
+                                            <td>@item.PCd</td>
+                                            <td>@item.ProductID</td>
+                                            <td>@item.TP</td>
+                                             <td>@item.Vat</td>
+                                            <td>@item.Sales_Qty</td>
+                                            <td>@item.Sales_Val</td>
+                                            <td>@item.Retn_Qty</td>
+                                            <td>@item.ActualSales_Qty</td>
+                                            <td>@item.DeptCd</td>
+                                            <td>@item.Period</td>
+                                            <td>@item.MsrCd</td>
+                                             <td>@item.Supervisor</td>
+                                            <td>@item.SSupervisor</td>
+                                            <td>@item.SSSupervisor</td>
+                                            <td>@item.SSSSupervisor</td>
+                                            <td>@item.RegionCode</td>
+                                            <td>@item.ZoneCode</td>
+                                            <td>@item.SMAreaCode</td>
+                                            <td>@item.GMAreaCode</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+@section Scripts
+    {
+
+
+    <script type="text/javascript">
+
+       $(document).ready(function(){
+            $('.datatable').DataTable({
+
+                drawCallback: function () {
+                    var api = this.api();
+                    $(api.table().footer()).html(
+                        api.column(6, { page: 'current' }).data().sum()
+                    );
+                },
+                dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
+                buttons: [
+                    {
+                        extend: 'pageLength',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+
+                    'colvis'
+                ],
+                columnDefs: [{
+                    visible: false
+                }],
+                responsive: true,
+
+            });
+       })
+
+    </script>
+
+}
+

@@ -1,0 +1,71 @@
+﻿@model MOAS.Models.User
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row m-2">
+            <div class="card card-outline card-success mt-3 col-12 shadow-lg">
+                <div class="card-header">
+                    <h3 class="card-title">Register New User</h3>
+                </div>
+                <div class="card-body">
+                     <form id="frmRegister">
+                         <div class="form-row mb-2">
+                             <div class="col">
+                                <label asp-for="UserName" class="form-label">User Name</label>
+                                <input asp-for="UserName" class="form-control form-control-sm" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                             </div>
+                             <div class="col">
+                               <label asp-for="FullName" class="form-label">Full Name</label>
+                               <input asp-for="FullName" class="form-control form-control-sm" />
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                             </div>
+                            <div class="col">
+                                <label asp-for="UserType" class="form-label">User Type</label>
+                                <select asp-for="UserType" asp-items="Html.GetEnumSelectList<EUserType>()" class="form-control form-control-sm" >
+                                    <option value="0">Select User Type</option>
+                                </select>
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+                         </div>
+                        <div class="form-row mb-2">
+                            <div class="col">
+                                <label asp-for="Email" class="form-label">Email</label>
+                                <input asp-for="Email" class="form-control form-control-sm" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="col">
+                                <label asp-for="Password" class="form-label">Password</label>
+                                <input asp-for="Password" class="form-control form-control-sm" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="col">
+                                <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                                <input asp-for="ConfirmPassword" class="form-control form-control-sm" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row mt-3 d-flex justify-content-center">
+                            <button type="button" class="btn bg-gradient-warning mr-2" onclick="FormReset('frmRegister')">
+                                <i class="fas fa-redo"></i> Clear Input
+                            </button>
+                            <button type="button" class="btn bg-gradient-success" onclick="Register()">
+                                <i class="fas fa-save"></i> Register New User
+                            </button>
+                        </div>
+                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

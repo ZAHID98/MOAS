@@ -1,0 +1,331 @@
+﻿@model MOAS.Models.VM.VMResultApprov
+@{
+    ViewData["Title"] = "Add Deprtment";
+
+
+}
+
+<style>
+    #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 2px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color:  #00a393;
+            color: white;
+        }
+
+    table {
+        width: 50%;
+        
+        border-collapse: collapse;
+    }
+
+    th {
+        height: 10px;
+    }
+
+    #customers td {
+        font-size: 12px;
+        vertical-align: top;
+        height: 10px;
+        padding:2.5px;
+    }
+
+    #customers th {
+        font-size: 12px;
+        padding: 5px;
+
+    }
+</style>
+
+<section class="content">
+    <div class="container-fluid">
+        <form method="post" asp-action="UpdateResult">
+        <div class="row">
+        
+        <div class="col-lg-7">
+        <div class="row">
+            <div class="card card-outline card-success mt-3 col-12 shadow-lg">
+                <div class="card-header">
+                    <h3 class="card-title">Sample Info</h3>
+                </div>
+                
+                   
+                
+                <div class="card-body">
+                           @* <form method="post" asp-action="UpdateResult">*@
+                                <input type="hidden" name ="obj.SAMPLE_NO" value="@Model.SAMPLE_NO" />
+                                <input type="hidden" name="obj.INS_LOT" value="@Model.INS_LOT" />
+                                <input type="hidden" name="obj.REQ_NO" value="@Model.REQ_NO" />
+                                <input type="hidden" name="obj.KUNNR" value="@Model.KUNNR" />
+                                <input type="hidden" name="obj.CUST_ADDRESS" value="@Model.CUST_ADDRESS" />
+                                <input type="hidden" name="obj.EQUIPMENT_SERIAL" value="@Model.EQUIPMENT_SERIAL" />
+                                
+
+                        <div class="form-row mb-2">
+                                    <div class="col-4">
+                                        <label asp-for="CutomerName" class="form-label">Customer</label>
+                                        <input name ="obj.CutomerName" value="@Model.CutomerName" readonly ="readonly" class="form-control form-control-sm"/>
+                                        <span asp-validation-for="CutomerName" class="text-danger"></span>
+                                    </div>
+                            <div class="col-3">
+                                        <label asp-for="EQUIPMENT" class="form-label">Equipment No</label>
+                                        <input name="EQUIPMENT" value="@Model.EQUIPMENT" readonly="readonly" class="form-control form-control-sm" />
+                                        <span asp-validation-for="EQUIPMENT" class="text-danger"></span>
+                            </div>
+                            <div class="col-3">
+                                <label asp-for="EQUIPMENT_MODEL" class="form-label">Model</label>
+                                        <input asp-for="EQUIPMENT_MODEL" readonly="readonly" class="form-control form-control-sm" />
+                                <span asp-validation-for="EQUIPMENT_MODEL" class="text-danger"></span>
+                            </div>
+                            <div class="col-2">
+                                <label asp-for="EQUIPMENT_SERIAL" class="form-label">Serial</label>
+                                        <input asp-for="EQUIPMENT_SERIAL" readonly="readonly" class="form-control form-control-sm" />
+                                <span asp-validation-for="EQUIPMENT_SERIAL" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row mb-2">
+                            <div class="col-3">
+                                <label asp-for="SAMPLE_NO" class="form-label">Sample No</label>
+                                <input asp-for="SAMPLE_NO"  readonly ="readonly" class="form-control form-control-sm" />
+                                <span asp-validation-for="SAMPLE_NO" class="text-danger"></span>
+                            </div>
+                            <div class="col-3">
+                                <label asp-for="SAMPLE_DATE" class="form-label"></label>
+                                  <input asp-for="SAMPLE_DATE"  readonly="readonly" class="form-control form-control-sm" />
+                                <span asp-validation-for="SAMPLE_DATE" class="text-danger"></span>
+                            </div>
+                            <div class="col-4">
+                                <label asp-for="OIL_NAME" class="form-label">Oil Name</label>
+                                <input asp-for="OIL_NAME" readonly="readonly" class="form-control form-control-sm" />
+                                <span asp-validation-for="OIL_NAME" class="text-danger"></span>
+                            </div>
+
+                                    <div class="col-2">
+                                        <label asp-for="OIL_RUN_HOUR" class="form-label">Oil R/H</label>
+                                        <input asp-for="OIL_RUN_HOUR" readonly="readonly" class="form-control form-control-sm" />
+                                        <span asp-validation-for="OIL_NAME" class="text-danger"></span>
+                                    </div>
+                        </div>
+                        <div class="form-row mb-2">
+                            <div class="col-3">
+                                        <label asp-for="EQP_RUN_HOUR" class="form-label">Equp.R/H</label>
+                                        <input asp-for="EQP_RUN_HOUR" readonly="readonly" class="form-control form-control-sm" />
+                                        <span asp-validation-for="EQP_RUN_HOUR" class="text-danger"></span>
+                            </div>
+                            <div class="col-3">
+                                        <label asp-for="FILT_RUN_HOUR" class="form-label">Filter R/H</label>
+                                        <input asp-for="FILT_RUN_HOUR" readonly="readonly" class="form-control form-control-sm" />
+                                        <span asp-validation-for="FILT_RUN_HOUR" class="text-danger"></span>
+                            </div>
+                            <div class="col-3">
+                                        <label asp-for="DAILY_OIL_TOP" class="form-label">Daily ToUp</label>
+                                        <input name="obj.DAILY_OIL_TOP"  value="@Model.DAILY_OIL_TOP" readonly="readonly" class="form-control form-control-sm" />
+                                        <span asp-validation-for="DAILY_OIL_TOP" class="text-danger"></span>
+                            </div>
+                                    <div class="col-3">
+                                        <label asp-for="LAST_OILCHNG_DT" class="form-label">Last Changed</label>
+                                        <input asp-for="LAST_OILCHNG_DT" readonly="readonly" class="form-control form-control-sm" />
+                                        <span asp-validation-for="LAST_OILCHNG_DT" class="text-danger"></span>
+                                    </div>
+                        </div>
+
+                                @{
+                                    var e_statu = Enum.GetValues(typeof(MOAS.Models.EResultSt)).Cast<EResultSt>().ToList();
+                                }
+
+                               
+
+                            @foreach (var st in e_statu)
+                             {
+                                    <div class="form-check custom-control-inline">
+                                        <input type="radio" name="obj.EResultSt" class="form-check-input" value="@st">
+                                        @if (st == EResultSt.Normal)
+                                        {
+                                            <label asp-for="status" class="form-check-label" style= "color:green;font-size:20px;"  >@st</label>
+                                        }
+                                       else if (st == EResultSt.Caution)
+                                            {
+                                            <label asp-for="status" class="form-check-label" style="color:#fec901;font-size:20px;">@st</label>
+                                      }
+
+                                        else if (st == EResultSt.Alert)
+                                        {
+                                            <label asp-for="status" class="form-check-label" style="color:red;font-size:20px;">@st</label>
+                                        }
+                                       
+                              </div>
+                            }
+
+                                <div class="form-row mb-2">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label asp-for="Comments" class="form-label">Description</label>
+                                            @*<input asp-for="Description" class="form-control form-control-sm" />*@
+                                            @Html.TextArea("obj.Comments",Model.Comments,new { @class = "form-control input-sm" })
+                                            <span asp-validation-for="Comments" class="text-danger"></span>
+                                        </div>
+
+                                    </div>
+                                    </div>
+
+                               
+                                <div class="form-row mt-3 d-flex justify-content-center">
+
+                                    <button type="submit" class="btn btn-primary" id="saveOrder">
+                                        <i class="fa fa-save"></i> Save
+                                        </button>
+
+                                   @* <button type="button" class="btn bg-gradient-success" onclick="UpdateResult()">
+                                        <i class="fas fa-save"></i> Save Data
+                                    </button>*@
+                                </div>
+
+                  @*      
+                    </form>*@
+                </div>
+                
+                
+            </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-lg-5">
+            
+                <div class="card card-outline card-success mt-3 col-12 shadow-lg">
+                    <div class="card-header">
+                        <h5 style="color:royalblue;"><i class="fa fa-flask"></i>    LAB Result</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table table-sm table-bordered  table-info" id="customers">
+                            <thead >
+                                <tr>
+                                    <th>
+                                        SL No
+                                    </th>
+                                    <th>
+                                        Test Name
+                                    </th>
+                                   
+                                    <th>
+                                       Result
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 0;
+                                    //decimal Lv_Amt = 0.00;
+
+                                }
+                                @foreach (var item in Model.results)
+                                {
+
+                                    <tr id="@("rowdetail" + item.SAMPLE_NO)">
+                                        <td style="width:40px;">
+                                            @Html.DisplayFor(modelItem => i) 
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.KURZTEXT)
+                                        </td>
+                                       
+                                        <td style="width:60px;">
+                                                @Html.Hidden("obj.results["+i+"].REQ_NO",item.REQ_NO)
+                                                @Html.Hidden("obj.results["+i+"].SAMPLE_NO",item.SAMPLE_NO)
+                                                @Html.Hidden("obj.results["+i+"].VERWMERKM",item.VERWMERKM)
+                                                <input type="text" name="@("obj.results["+i+"].Result")" value="@item.Result" style="width:60px;" />
+                                        </td>
+
+
+
+
+
+                                    </tr>
+                                    i++;
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+            
+        </div>
+        </form>
+    </div>
+   
+</section>
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+}
+<script>
+
+
+    function UpdateResult() {
+       
+     
+
+        $("#frmResult").validate();
+
+        //if ($("#frmResult").valid() === true) {
+        var FormData = $("#frmResult").serialize();
+        
+            $.post({
+                url: "/Home/VieWDetail",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: FormData,
+                
+                success: function (result) {
+                    if (result.flag == 'y') {
+                        toastr.success(result.msg);
+                    }
+                    else {
+                        toastr.error(result.msg);
+                    }
+                },
+                error: function () {
+                    toastr.error(result.msg);
+                }
+            }
+            );
+        }
+    
+
+
+</script>
+
+
+
+

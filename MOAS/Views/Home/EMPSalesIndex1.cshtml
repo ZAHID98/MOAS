@@ -1,0 +1,213 @@
+﻿@model IEnumerable<DailySales>
+@{
+    ViewData["Title"] = "Invoice List";
+}
+
+<style>
+    #customers {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 2px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #f01523;
+        }
+
+        #customers th {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-align: left;
+            background-color: #4267B2;
+            color: white;
+        }
+
+    table {
+        width: 50%;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th {
+        height: 10px;
+    }
+
+    #customers td {
+        font-size: 11px;
+        vertical-align: middle;
+        height: 10px;
+        padding: 2.5px;
+        text-align: center;
+    }
+
+    #customers th {
+        font-size: 10px;
+        padding: 5px;
+        text-align: center;
+    }
+</style>
+
+<link rel="stylesheet " href="~/css/gridmvc.css" />
+
+<link rel="stylesheet " href="~/css/gridmvc.css" />
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-info">
+                @*<h1>
+                    <i class="fas fa-list"></i> Pending List
+                   @* <a asp-action="Register" class="btn btn-sm bg-gradient-primary" title="Create User">
+                        <i class="fas fa-plus-circle"></i>
+                        New User
+                    </a>*@
+                @*</h1>*@
+                    <form asp-action="EMPSalesIndex" class="form-inline" method="post">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label>From Date:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="date" id="fromdate" name="Start" value="@ViewBag.StartDate" class="form-control">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label>To Date:</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="date" class="form-control" value="@ViewBag.EndDate" name="End" id="toDate">
+                                    </div>
+
+
+
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" name="q" value="@ViewBag.SearchText"
+                                           class="form-control form-control-sm mr-2" placeholder="Search Keyword" />
+
+                                    <button type="submit" class="btn btn-sm bg-gradient-success" id="btnSearch">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                               
+                                @if (ViewBag.SearchText != null)
+                                {
+                                    <span class="text-lg-end">
+
+                                        <a title="Clear Search" asp-action="Index">
+                                            <i style="color:red;" class="fa fa-fw fa-times"></i> Total Result Found @Model.Count()
+                                        </a>
+                                    </span>
+
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+            <div>
+                
+@*
+                <form asp-action="EMPSalesIndex" class="form-inline" method="post">
+
+
+
+
+                    <input type="text" name="q" value="@ViewBag.SearchText"
+                           class="form-control form-control-sm mr-2" placeholder="Search Keyword" />
+
+                    <button type="submit" class="btn btn-sm bg-gradient-success" id="btnSearch">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+
+                    @if (ViewBag.SearchText != null)
+                    {
+                        <span class="text-lg-end">
+
+                            <a title="Clear Search" asp-action="Index">
+                                <i style="color:red;" class="fa fa-fw fa-times"></i> Total Result Found @Model.Count()
+                            </a>
+                        </span>
+
+                    }
+                </form>*@
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+@using GridMvc
+@using MOAS.Models;
+<section class="content">
+    <div class="container-fluid">
+        <div class="row m-2">
+            <!--Message-->
+            @if (ViewBag.Info != null)
+            {
+
+                <div class="alert alert-success" role="alert">
+                    <a class="close" data-dismiss="alert" href="#"><i class="fas fa-times text-white"></i></a>
+                    <strong>@ViewBag.Info</strong>
+
+                </div>
+
+            }
+            else if (ViewBag.Error != null)
+            {
+
+                <div class="alert alert-danger" role="alert">
+                    <a class="close" data-dismiss="alert" href="#"><i class="fas fa-times text-white"></i></a>
+                    <strong>@ViewBag.Error</strong>
+
+                </div>
+
+            }
+            <div class="card card-outline card-success col-12 shadow-lg">
+                <div class="card-body">
+                    <style type="text/css">
+                        .table td {
+                            padding: .15rem;
+                        }
+                    </style>
+                    @await Html.Grid(Model).Columns(
+                    col =>
+                    {
+                    col.Add(i => i.vbeln).Titled("InvoiceNo").Sortable(true);
+                    col.Add(i => i.Posnr).Titled("Line No").Sortable(true);
+                    col.Add(i => i.name1).Titled("Customer Name").Filterable(true).Sortable(true);
+                    col.Add(i => i.FKDat).Titled("Invoice Date").Filterable(true).Sortable(true).Format("{0:dd MMM, yy}");
+                    col.Add(i => i.arktx).Titled("Product").Filterable(true).Sortable(true);
+                    col.Add(i => i.TotalQty).Titled("Quantity").Filterable(true).Sortable(true);
+
+                   
+                    }
+                    ).WithPaging(12, 20).SetStriped(true).RenderAsync()
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="divEditResult"></div>
+
+@section Scripts
+{
+    <script src="~/js/gridmvc.js" type="text/javascript"></script>
+    
+}
+
